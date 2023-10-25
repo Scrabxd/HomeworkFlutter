@@ -1,31 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tarea_flutter/models/upperbody.dart';
+import 'package:tarea_flutter/screens/loadingScreen.dart';
+import 'package:tarea_flutter/services/upperbody_service.dart';
 import 'package:tarea_flutter/widgets/navbar.dart';
-import 'package:http/http.dart';
+
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    final upperbodyService = Provider.of<UpperbodyService>(context);
+
     return Scaffold(
-      appBar: CustomAppBar(title:'FW19', onMenuPressed: (){}, onNotificationsPressed: (){}, 
-      iconLeft: const Icon(Icons.arrow_back, color: Colors.black,), 
-      iconRight: const Icon(Icons.crop_square , color:Colors.black 
-        )
+      appBar: CustomAppBar(
+        title: 'FW19',
+        onMenuPressed: () {},
+        onNotificationsPressed: () {},
+        iconLeft: const Icon(Icons.arrow_back, color: Colors.black),
+        iconRight: const Icon(Icons.crop_square, color: Colors.black),
       ),
       body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // Two items per row
-          crossAxisSpacing: 10.0, // Spacing between columns
-          mainAxisSpacing: 10.0, // Spacing between rows
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, 
+          crossAxisSpacing: 10.0, 
+          mainAxisSpacing: 10.0, 
         ),
-        itemCount: 6, // Number of items in the grid
+        itemCount: upperbodyService.prods.length, 
         itemBuilder: (context, index) {
-          return Container(
-            color: Colors.blue, // Change to your desired widget or content
-            height: 100.0, // Adjust the height as needed
-          );
+          
+          return CustomCard(upper: upperbodyService.prods[index],);
         },
+      ),
+    );
+  }
+}
+
+class CustomCard extends StatelessWidget {
+
+  final Upperbody upper;
+  
+  const CustomCard({Key? key, required this.upper}) : super(key:key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Card(
+      elevation: 3, 
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+
+          Image(image: AssetImage(upper.pic),), 
+
+          Padding(
+            padding: const  EdgeInsets.all(8.0),
+            child:Text(upper.name)
+          ),
+        ],
       ),
     );
   }

@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tarea_flutter/screens/main_screen.dart';
 import 'package:tarea_flutter/screens/shop_screen.dart';
+import 'package:tarea_flutter/services/upperbody_service.dart';
 
 
 
 void main() {
-  runApp(const MainApp());
+  runApp(AppState());
 }
 
 
-// class AppState extends StatelessWidget{
-//   @override
-//   Widget build(BuildContext context){
-//     return MultiProvider(
-//       providers: [ 
-
-//         ],
-//         child: const MainApp(),
-//     );
-//   }
-// }
+class AppState extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return MultiProvider(
+      providers: [ 
+          ChangeNotifierProvider(create: (_) => UpperbodyService())
+        ],
+        child: const MainApp(),
+    );
+  }
+}
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -33,7 +34,7 @@ class MainApp extends StatelessWidget {
       initialRoute: "shop",
       routes: {
         "main":(_) => MainScreen(),
-        "shop":(_) => ShopScreen()
+        "shop":(_) => const ShopScreen()
       },
     );
   }
