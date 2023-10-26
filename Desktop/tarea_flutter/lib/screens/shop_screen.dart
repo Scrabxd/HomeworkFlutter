@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tarea_flutter/models/upperbody.dart';
-import 'package:tarea_flutter/screens/loadingScreen.dart';
-import 'package:tarea_flutter/services/upperbody_service.dart';
+import 'package:tarea_flutter/services/allService.dart';
+
 import 'package:tarea_flutter/widgets/navbar.dart';
 
 
@@ -12,12 +11,18 @@ class ShopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final upperbodyService = Provider.of<UpperbodyService>(context);
+    final shoesService = Provider.of<ShoesService>(context);
+
 
     return Scaffold(
       appBar: CustomAppBar(
         title: 'FW19',
-        onMenuPressed: () {},
+        onPressed: (){
+          Navigator.of(context).pushNamed('main');
+        },
+        onPressed2: (){
+          Navigator.of(context).pushNamed('shoe');
+        },
         onNotificationsPressed: () {},
         iconLeft: const Icon(Icons.arrow_back, color: Colors.black),
         iconRight: const Icon(Icons.crop_square, color: Colors.black),
@@ -28,39 +33,61 @@ class ShopScreen extends StatelessWidget {
           crossAxisSpacing: 10.0, 
           mainAxisSpacing: 10.0, 
         ),
-        itemCount: upperbodyService.prods.length, 
+        itemCount: shoesService.allData.length, 
         itemBuilder: (context, index) {
           
-          return CustomCard(upper: upperbodyService.prods[index],);
+          return CustomCard(allData: shoesService.allData[index],);
         },
       ),
     );
   }
 }
-
 class CustomCard extends StatelessWidget {
+  final allData;
 
-  final Upperbody upper;
-  
-  const CustomCard({Key? key, required this.upper}) : super(key:key);
+  CustomCard({Key? key, required this.allData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Card(
-      elevation: 3, 
+      elevation: 0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-
-          Image(image: AssetImage(upper.pic),), 
-
+          Expanded(
+            child: AspectRatio(
+              aspectRatio: 1, // Use a 1:1 aspect ratio for the image container
+              child: Image.network(
+                allData.pic,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           Padding(
-            padding: const  EdgeInsets.all(8.0),
-            child:Text(upper.name)
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  allData.name,
+                  style: const TextStyle(fontFamily: 'Impact'),
+                ),
+                Text(
+                  allData.price,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Impact',
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 }
+
+
+
+

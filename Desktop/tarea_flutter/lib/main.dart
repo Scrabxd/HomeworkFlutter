@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tarea_flutter/screens/main_screen.dart';
+import 'package:tarea_flutter/screens/shoeScreen.dart';
 import 'package:tarea_flutter/screens/shop_screen.dart';
-import 'package:tarea_flutter/services/upperbody_service.dart';
+import 'package:tarea_flutter/services/allService.dart';
 
 
 
@@ -16,7 +17,8 @@ class AppState extends StatelessWidget{
   Widget build(BuildContext context){
     return MultiProvider(
       providers: [ 
-          ChangeNotifierProvider(create: (_) => UpperbodyService())
+
+          ChangeNotifierProvider(create: (_) => ShoesService())
         ],
         child: const MainApp(),
     );
@@ -31,10 +33,11 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Routing system app",
-      initialRoute: "shop",
+      initialRoute: "shoe",
       routes: {
         "main":(_) => MainScreen(),
-        "shop":(_) => const ShopScreen()
+        "shop":(_) => const ShopScreen(),
+        "shoe":(_) => const ProductSingle()
       },
     );
   }

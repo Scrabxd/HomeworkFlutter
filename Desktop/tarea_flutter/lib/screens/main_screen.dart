@@ -9,7 +9,11 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       appBar:CustomAppBar(
         title: 'REPRESENT',
-        onMenuPressed: () {
+        onPressed: () {
+          Navigator.of(context).pushNamed('shop');
+        },
+        onPressed2: (){
+          Navigator.of(context).pushNamed('shoe');
         },
         onNotificationsPressed: () {
         },

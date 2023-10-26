@@ -4,32 +4,35 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Icon iconLeft;
   final Icon iconRight;
-  final Function() onMenuPressed;
+  final Function() onPressed;
+  final Function() onPressed2;
   final Function() onNotificationsPressed;
 
  const CustomAppBar({super.key, 
     required this.title,
-    required this.onMenuPressed,
     required this.onNotificationsPressed,
     required this.iconLeft,
+    required this.onPressed,
+    required this.onPressed2,
     required this.iconRight
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       backgroundColor: Colors.white,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
             icon: iconLeft,
-            onPressed: onMenuPressed,
+            onPressed: onPressed,
           ),
-          Text(title, style: const TextStyle(fontSize: 44,color: Colors.black, fontFamily:'impact', fontStyle: FontStyle.italic )),
+          Text(title, style: TextStyle(fontSize: 34, color: Colors.black, fontFamily: "Impact", fontStyle: FontStyle.italic , fontWeight: FontWeight.bold)),
           IconButton(
             icon: iconRight,
-            onPressed: onNotificationsPressed,
+            onPressed: onPressed2
           ),
         ],
       ),
